@@ -1,0 +1,111 @@
+steps:
+  STG_EMP-4399:
+    operation:
+      config:
+        insertStrategy: INSERT
+        postSQL: ""
+        preSQL: ""
+        testsEnabled: true
+        truncateBefore: true
+      database: ""
+      dependencies: []
+      deployEnabled: true
+      description: ""
+      isDataVault: false
+      isMultisource: false
+      locationID: ""
+      locationName: SJ_DEMO_DEV
+      materializationType: table
+      metadata:
+        appliedNodeTests: []
+        columns:
+          - columnReference:
+              columnCounter: 43593
+              stepCounter: "4399"
+            dataType: NUMBER(10,0)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: EMP_ID
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43588
+                    stepCounter: "4398"
+                transform: ""
+          - columnReference:
+              columnCounter: 43594
+              stepCounter: "4399"
+            dataType: VARCHAR(10)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: EMP_NAME
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43589
+                    stepCounter: "4398"
+                transform: ""
+          - columnReference:
+              columnCounter: 43595
+              stepCounter: "4399"
+            dataType: VARCHAR(10)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: EMP_ZIP
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43590
+                    stepCounter: "4398"
+                transform: ""
+          - columnReference:
+              columnCounter: 43596
+              stepCounter: "4399"
+            dataType: VARCHAR(1)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: EMP_STATUS
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43591
+                    stepCounter: "4398"
+                transform: ""
+          - columnReference:
+              columnCounter: 43597
+              stepCounter: "4399"
+            dataType: DATE
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: LAST_EXTRACTED_DT
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43592
+                    stepCounter: "4398"
+                transform: ""
+        cteString: ""
+        enabledColumnTestIDs: []
+        sourceMapping:
+          - aliases:
+              EMP: "4398"
+            customSQL:
+              customSQL: ""
+            dependencies:
+              - locationName: SJ_DEMO_DEV
+                nodeName: EMP
+            join:
+              joinCondition: FROM {{ ref('SJ_DEMO_DEV', 'EMP') }} "EMP"
+            name: STG_EMP
+            noLinkRefs: []
+      name: STG_EMP
+      overrideSQL: false
+      schema: ""
+      sqlType: Stage
+      type: sql
+    stepCounter: "4399"
