@@ -1,0 +1,153 @@
+steps:
+  VW_FINANCE-a0b29fbe-42ab-47df-894a-94564c70fb5f:
+    operation:
+      config:
+        insertStrategy: INSERT
+        postSQL: ""
+        preSQL: ""
+        testsEnabled: true
+        truncateBefore: true
+      database: ""
+      dependencies: []
+      deployEnabled: true
+      description: Customer data as defined by TPC-H
+      isDataVault: false
+      isMultisource: false
+      locationID: ""
+      locationName: EDW
+      materializationType: view
+      metadata:
+        appliedNodeTests: []
+        columns:
+          - columnReference:
+              columnCounter: 5a4831f2-09fd-42d1-9c78-fe1506b2b11a
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: NUMBER
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: DIM_CUSTOMER_KEY
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 7f7742a4-ad25-43cf-8874-86522a7a2f37
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: b5b667fa-51f4-438f-9212-b4e8b336bf30
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: NUMBER(38,0)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_CUSTKEY
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 882e1caa-1e78-4173-9b11-35645f52478c
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: 64d95dd0-76d8-4f43-b040-39a348d2e3cb
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: VARCHAR(25)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_NAME
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: d0d13ca3-1231-47f1-934b-bbe7c61364a5
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: b5f5a143-baaf-414a-838b-6fd768563149
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: VARCHAR(40)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_ADDRESS
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: bc4211be-770f-46f6-803c-edea3140454d
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: d57672c7-8061-4b57-8244-3753baf4cfd5
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: NUMBER(38,0)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_NATIONKEY
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 38be45f1-3249-40cd-870b-091808419714
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: 08e4c29d-0936-46e1-8792-55fec33967f0
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: VARCHAR(15)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_PHONE
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: b93e5520-6fc5-4632-ae54-6dfe35716a47
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - columnReference:
+              columnCounter: 60348332-bd5f-4ccf-8a1b-3f29fd0043f4
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: NUMBER(12,2)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_ACCTBAL
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 93c9db87-7e8e-4037-92c2-b33873391d34
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+          - acceptedValues:
+              strictMatch: false
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 61d48b14-9f22-4eaa-af31-7778be115fc7
+              stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f
+            dataType: VARCHAR(25)
+            description: ""
+            name: NATION_NAME
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 61d48b14-9f22-4eaa-af31-7778be115fc7
+                    stepCounter: bcbe2972-229f-440d-bc05-de318049eb16
+                transform: ""
+        cteString: ""
+        enabledColumnTestIDs: []
+        sourceMapping:
+          - customSQL:
+              customSQL: ""
+            dependencies:
+              - locationName: EDW
+                nodeName: DIM_CUSTOMER
+            join:
+              joinCondition: FROM {{ ref('EDW', 'DIM_CUSTOMER') }} "DIM_CUSTOMER"
+            name: VW_FINANCE
+            noLinkRefs: []
+      name: VW_FINANCE
+      overrideSQL: false
+      schema: ""
+      sqlType: Stage
+      type: sql
+    stepCounter: a0b29fbe-42ab-47df-894a-94564c70fb5f

@@ -1,5 +1,5 @@
 steps:
-  STG_CUSTOMER-ca16c210-485f-4d88-82d9-327d3993754c:
+  STG_CUSTOMER-368c8246-15ac-4e25-9116-235a795e6cf2:
     operation:
       config:
         insertStrategy: INSERT
@@ -20,8 +20,8 @@ steps:
         appliedNodeTests: []
         columns:
           - columnReference:
-              columnCounter: b07bc8b0-03ee-470b-a14e-3bbc2a4b1e90
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 67ef65db-6741-41de-aacb-b8a6fe0779db
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: NUMBER(38,0)
             description: ""
             hashColumns: []
@@ -34,8 +34,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: fc00fbf1-b39b-482b-9dbc-df0064dcc2ef
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 999515dd-6eaf-4d04-bf3e-7306d492a8f4
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(25)
             description: ""
             hashColumns: []
@@ -48,8 +48,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: UPPER("CUSTOMER"."C_NAME")
           - columnReference:
-              columnCounter: cd6e9a2a-710c-41d0-94ad-e6a4c3d5315a
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: bc7b2243-4bb5-478b-af27-70e3f925c871
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(40)
             description: ""
             hashColumns: []
@@ -62,8 +62,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: UPPER("CUSTOMER"."C_ADDRESS")
           - columnReference:
-              columnCounter: 0afd9916-650a-4e02-a563-553eec4bdd60
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 5eeac68f-3423-4c7f-bcc9-26636cdec0f8
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: NUMBER(38,0)
             description: ""
             hashColumns: []
@@ -76,8 +76,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 1fd31e96-0ae8-4efc-be43-7f13105e0ddc
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 718a4d19-8f62-429e-a5ea-8be867b0fdca
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(15)
             description: ""
             hashColumns: []
@@ -90,8 +90,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 1cd6528a-75a4-4d1e-8b05-b25eab4429b3
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: fa1e78d7-eda1-4abe-922d-42bcd80d8b49
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: NUMBER(12,2)
             description: ""
             hashColumns: []
@@ -104,13 +104,13 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 43ae364f-50c7-4c05-8936-61bc27178ff6
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 18f7f1d6-0b54-4568-adfb-de55c64cc74c
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(50)
             description: ""
             hashColumns: []
             hashDetails: null
-            name: C_RATING
+            name: C_RATE
             nullable: false
             sourceColumnReferences:
               - columnReferences:
@@ -118,8 +118,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: CASE WHEN "CUSTOMER"."C_ACCTBAL" > 5000 THEN 'Gold' ELSE 'Silver' END
           - columnReference:
-              columnCounter: 6676f3a5-7bc3-44ee-820f-2bbcf094beed
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: e7ad49b9-2ecb-4863-9e96-e2615ff6cde2
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(10)
             description: ""
             hashColumns: []
@@ -130,10 +130,10 @@ steps:
               - columnReferences:
                   - columnCounter: 5ca0aefe-d7aa-4a4f-820b-c75ae7d0ceb7
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
-                transform: UPPER("CUSTOMER"."C_MKTSEGMENT")
+                transform: ""
           - columnReference:
-              columnCounter: aabc649c-c267-454d-a367-6a2348169db7
-              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+              columnCounter: 4c77784d-6836-457e-a0e3-aee5c0fad2e5
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
             dataType: VARCHAR(117)
             description: ""
             hashColumns: []
@@ -145,16 +145,36 @@ steps:
                   - columnCounter: 3973d291-44d2-4f6e-b70a-3614c46404ff
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: UPPER("CUSTOMER"."C_COMMENT")
+          - columnReference:
+              columnCounter: 751961a9-71fe-4903-82ad-61b732036885
+              stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
+            dataType: VARCHAR(25)
+            description: ""
+            name: NATION_NAME
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: d7d93797-bb78-42ce-9528-1100a0443b0d
+                    stepCounter: eb5286c0-097f-4eb5-a87b-4dc12eefbfbc
+                transform: ""
         cteString: ""
         enabledColumnTestIDs: []
         sourceMapping:
-          - customSQL:
+          - aliases:
+              CUSTOMER: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
+              NATION: eb5286c0-097f-4eb5-a87b-4dc12eefbfbc
+            customSQL:
               customSQL: ""
             dependencies:
               - locationName: SRC
                 nodeName: CUSTOMER
+              - locationName: SRC
+                nodeName: NATION
             join:
-              joinCondition: FROM {{ ref('SRC', 'CUSTOMER') }} "CUSTOMER"
+              joinCondition: |-
+                FROM {{ ref('SRC', 'CUSTOMER') }} "CUSTOMER"
+                INNER JOIN {{ ref('SRC', 'NATION') }} "NATION"
+                ON "CUSTOMER"."C_NATIONKEY" = "NATION"."N_NATIONKEY"
             name: STG_CUSTOMER
             noLinkRefs: []
       name: STG_CUSTOMER
@@ -162,4 +182,4 @@ steps:
       schema: ""
       sqlType: Stage
       type: sql
-    stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+    stepCounter: 368c8246-15ac-4e25-9116-235a795e6cf2
