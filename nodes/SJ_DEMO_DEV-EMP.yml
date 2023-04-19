@@ -1,5 +1,5 @@
 steps:
-  EMP-4398:
+  EMP-4404:
     operation:
       database: ""
       dataset: ""
@@ -14,8 +14,8 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43588
-              stepCounter: 4398
+              columnCounter: 43633
+              stepCounter: 4404
             config: {}
             dataType: NUMBER(10,0)
             defaultValue: ""
@@ -29,8 +29,8 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43589
-              stepCounter: 4398
+              columnCounter: 43634
+              stepCounter: 4404
             config: {}
             dataType: VARCHAR(10)
             defaultValue: ""
@@ -44,10 +44,10 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43590
-              stepCounter: 4398
+              columnCounter: 43635
+              stepCounter: 4404
             config: {}
-            dataType: VARCHAR(10)
+            dataType: NUMBER(38,0)
             defaultValue: ""
             description: ""
             name: EMP_ZIP
@@ -59,8 +59,8 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43591
-              stepCounter: 4398
+              columnCounter: 43636
+              stepCounter: 4404
             config: {}
             dataType: VARCHAR(1)
             defaultValue: ""
@@ -74,8 +74,8 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43592
-              stepCounter: 4398
+              columnCounter: 43637
+              stepCounter: 4404
             config: {}
             dataType: DATE
             defaultValue: ""
@@ -91,4 +91,4 @@ steps:
       sqlType: Source
       table: EMP
       type: sourceInput
-    stepCounter: "4398"
+    stepCounter: "4404"

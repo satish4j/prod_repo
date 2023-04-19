@@ -1,0 +1,213 @@
+steps:
+  STG_JSON_DEMO-4406:
+    operation:
+      config:
+        insertStrategy: INSERT
+        postSQL: ""
+        preSQL: ""
+        testsEnabled: true
+        truncateBefore: true
+      database: ""
+      dependencies: []
+      deployEnabled: true
+      description: ""
+      isDataVault: false
+      isMultisource: false
+      locationID: ""
+      locationName: EDW
+      materializationType: table
+      metadata:
+        appliedNodeTests: []
+        columns:
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43643
+              stepCounter: "4406"
+            config: {}
+            dataType: NUMBER
+            description: ""
+            name: age
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"JSON_DEMO\".\"V\":\"age\"::NUMBER"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43644
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: children_age
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"V_children\".value:\"age\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43645
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: children_gender
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"V_children\".value:\"gender\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43646
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: children_name
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"V_children\".value:\"name\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43647
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: citiesLived_cityName
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"V_citiesLived\".value:\"cityName\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43648
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: citiesLived_yearsLived
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"V_citiesLived_yearsLived\".value::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43649
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: fullName
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"JSON_DEMO\".\"V\":\"fullName\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43650
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: gender
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"JSON_DEMO\".\"V\":\"gender\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43651
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: phoneNumber_areaCode
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"areaCode\"::STRING"
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43652
+              stepCounter: "4406"
+            config: {}
+            dataType: STRING
+            description: ""
+            name: phoneNumber_subscriberNumber
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43641
+                    stepCounter: "4405"
+                transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"subscriberNumber\"::STRING"
+        cteString: ""
+        enabledColumnTestIDs: []
+        sourceMapping:
+          - customSQL:
+              customSQL: ""
+            dependencies:
+              - locationName: DEMO
+                nodeName: JSON_DEMO
+            join:
+              joinCondition: |-
+                FROM {{ ref('DEMO', 'JSON_DEMO') }} "JSON_DEMO", 
+                lateral flatten(input => "V":"children", OUTER => TRUE) "V_children", 
+                lateral flatten(input => "V":"citiesLived", OUTER => TRUE) "V_citiesLived", 
+                lateral flatten(input => "V_citiesLived".value:"yearsLived", OUTER => TRUE) "V_citiesLived_yearsLived"
+            name: STG_JSON_DEMO
+            noLinkRefs: []
+      name: STG_JSON_DEMO
+      overrideSQL: false
+      schema: ""
+      sqlType: Stage
+      type: sql
+    stepCounter: "4406"

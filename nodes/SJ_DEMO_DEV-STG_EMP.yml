@@ -20,80 +20,74 @@ steps:
         appliedNodeTests: []
         columns:
           - columnReference:
-              columnCounter: 43593
+              columnCounter: 43615
               stepCounter: "4399"
             dataType: NUMBER(10,0)
             description: ""
-            hashColumns: []
-            hashDetails: null
             name: EMP_ID
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43588
-                    stepCounter: "4398"
+                  - columnCounter: 43633
+                    stepCounter: "4404"
                 transform: ""
           - columnReference:
-              columnCounter: 43594
+              columnCounter: 43616
               stepCounter: "4399"
             dataType: VARCHAR(10)
             description: ""
-            hashColumns: []
-            hashDetails: null
             name: EMP_NAME
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43589
-                    stepCounter: "4398"
+                  - columnCounter: 43634
+                    stepCounter: "4404"
                 transform: ""
           - columnReference:
-              columnCounter: 43595
-              stepCounter: "4399"
-            dataType: VARCHAR(10)
-            description: ""
-            hashColumns: []
-            hashDetails: null
-            name: EMP_ZIP
-            nullable: true
-            sourceColumnReferences:
-              - columnReferences:
-                  - columnCounter: 43590
-                    stepCounter: "4398"
-                transform: ""
-          - columnReference:
-              columnCounter: 43596
+              columnCounter: 43618
               stepCounter: "4399"
             dataType: VARCHAR(1)
             description: ""
-            hashColumns: []
-            hashDetails: null
             name: EMP_STATUS
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43591
-                    stepCounter: "4398"
+                  - columnCounter: 43636
+                    stepCounter: "4404"
+                transform: ""
+          - acceptedValues:
+              strictMatch: false
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43638
+              stepCounter: "4399"
+            dataType: NUMBER(38,0)
+            description: ""
+            name: EMP_ZIP
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43635
+                    stepCounter: "4404"
                 transform: ""
           - columnReference:
-              columnCounter: 43597
+              columnCounter: 43619
               stepCounter: "4399"
             dataType: DATE
             description: ""
-            hashColumns: []
-            hashDetails: null
             name: LAST_EXTRACTED_DT
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43592
-                    stepCounter: "4398"
+                  - columnCounter: 43637
+                    stepCounter: "4404"
                 transform: ""
         cteString: ""
         enabledColumnTestIDs: []
         sourceMapping:
           - aliases:
-              EMP: "4398"
+              EMP: "4404"
             customSQL:
               customSQL: ""
             dependencies:

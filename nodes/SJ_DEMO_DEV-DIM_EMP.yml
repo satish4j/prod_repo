@@ -47,7 +47,7 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43593
+                  - columnCounter: 43615
                     stepCounter: "4399"
                 transform: ""
           - columnReference:
@@ -57,25 +57,12 @@ steps:
             description: ""
             hashColumns: []
             hashDetails: null
+            isBusinessKey: true
             name: EMP_NAME
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43594
-                    stepCounter: "4399"
-                transform: ""
-          - columnReference:
-              columnCounter: 43601
-              stepCounter: "4400"
-            dataType: VARCHAR(10)
-            description: ""
-            hashColumns: []
-            hashDetails: null
-            name: EMP_ZIP
-            nullable: true
-            sourceColumnReferences:
-              - columnReferences:
-                  - columnCounter: 43595
+                  - columnCounter: 43616
                     stepCounter: "4399"
                 transform: ""
           - columnReference:
@@ -85,11 +72,28 @@ steps:
             description: ""
             hashColumns: []
             hashDetails: null
+            isChangeTracking: true
             name: EMP_STATUS
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43596
+                  - columnCounter: 43618
+                    stepCounter: "4399"
+                transform: ""
+          - acceptedValues:
+              strictMatch: false
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 43639
+              stepCounter: "4400"
+            dataType: NUMBER(38,0)
+            description: ""
+            name: EMP_ZIP
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 43638
                     stepCounter: "4399"
                 transform: ""
           - columnReference:
@@ -103,7 +107,7 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43597
+                  - columnCounter: 43619
                     stepCounter: "4399"
                 transform: ""
           - acceptedValues:
