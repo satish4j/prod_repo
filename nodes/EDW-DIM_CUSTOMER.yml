@@ -12,7 +12,7 @@ steps:
       isDataVault: false
       isMultisource: false
       locationID: ""
-      locationName: ADW_PERSON
+      locationName: EDW
       materializationType: table
       metadata:
         appliedNodeTests: []

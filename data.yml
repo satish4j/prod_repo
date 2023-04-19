@@ -1,4 +1,4 @@
-defaultStorageMapping: ADW_PERSON
+defaultStorageMapping: EDW
 jobs: {}
 locations:
   ADW_PERSON:
