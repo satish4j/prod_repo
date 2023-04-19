@@ -1,5 +1,5 @@
 steps:
-  STG_JSON_DEMO-4406:
+  STG_JSON_DEMO-1b01f703-fb3c-430e-9304-73b92411d628:
     operation:
       config:
         insertStrategy: INSERT
@@ -14,18 +14,32 @@ steps:
       isDataVault: false
       isMultisource: false
       locationID: ""
-      locationName: EDW
+      locationName: ADW_PERSON
       materializationType: table
       metadata:
         appliedNodeTests: []
         columns:
+          - columnReference:
+              columnCounter: fb2b4112-1f4c-46c7-84a5-99821301e4cd
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
+            dataType: VARIANT
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: V
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
+                transform: ""
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43643
-              stepCounter: "4406"
+              columnCounter: 974b914f-0fa5-4621-b0f8-846e4831d9fc
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: NUMBER
             description: ""
@@ -33,16 +47,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"JSON_DEMO\".\"V\":\"age\"::NUMBER"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43644
-              stepCounter: "4406"
+              columnCounter: c78f5293-b339-45b7-9f53-7e661c71827c
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -50,16 +64,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"V_children\".value:\"age\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43645
-              stepCounter: "4406"
+              columnCounter: ce408e73-4642-49df-b038-16d823af6c98
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -67,16 +81,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"V_children\".value:\"gender\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43646
-              stepCounter: "4406"
+              columnCounter: e1e64999-bf03-4377-85fa-ea96bed92928
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -84,16 +98,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"V_children\".value:\"name\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43647
-              stepCounter: "4406"
+              columnCounter: af741298-1624-4c8d-8ec4-8b534742ef10
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -101,16 +115,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"V_citiesLived\".value:\"cityName\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43648
-              stepCounter: "4406"
+              columnCounter: 8df527c3-c4bf-41d8-9031-0679188cef32
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -118,16 +132,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"V_citiesLived_yearsLived\".value::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43649
-              stepCounter: "4406"
+              columnCounter: 40e6ebff-2bbc-47e4-9a46-c5394ccb03da
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -135,16 +149,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"JSON_DEMO\".\"V\":\"fullName\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43650
-              stepCounter: "4406"
+              columnCounter: d69ac8eb-42a3-497c-bcff-f7220f1f00d9
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -152,16 +166,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"JSON_DEMO\".\"V\":\"gender\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43651
-              stepCounter: "4406"
+              columnCounter: 35a192e3-49d6-472e-a98e-1db3fd220d23
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -169,16 +183,16 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"areaCode\"::STRING"
           - acceptedValues:
               strictMatch: true
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43652
-              stepCounter: "4406"
+              columnCounter: 2afe60e4-d39c-4afe-830d-768b38841fde
+              stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628
             config: {}
             dataType: STRING
             description: ""
@@ -186,8 +200,8 @@ steps:
             nullable: true
             sourceColumnReferences:
               - columnReferences:
-                  - columnCounter: 43641
-                    stepCounter: "4405"
+                  - columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+                    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
                 transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"subscriberNumber\"::STRING"
         cteString: ""
         enabledColumnTestIDs: []
@@ -210,4 +224,4 @@ steps:
       schema: ""
       sqlType: Stage
       type: sql
-    stepCounter: "4406"
+    stepCounter: 1b01f703-fb3c-430e-9304-73b92411d628

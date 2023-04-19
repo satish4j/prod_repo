@@ -1,5 +1,5 @@
 steps:
-  JSON_DEMO-4405:
+  JSON_DEMO-ac929297-b744-4e9d-96c2-a65a3da97b40:
     operation:
       database: ""
       dataset: ""
@@ -14,8 +14,8 @@ steps:
               values: []
             appliedColumnTests: {}
             columnReference:
-              columnCounter: 43641
-              stepCounter: 4405
+              columnCounter: ad2adc34-7bf6-46ce-a44e-e00dc399f696
+              stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40
             config: {}
             dataType: VARIANT
             defaultValue: ""
@@ -31,4 +31,4 @@ steps:
       sqlType: Source
       table: JSON_DEMO
       type: sourceInput
-    stepCounter: "4405"
+    stepCounter: ac929297-b744-4e9d-96c2-a65a3da97b40

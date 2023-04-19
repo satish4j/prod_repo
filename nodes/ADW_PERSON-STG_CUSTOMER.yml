@@ -1,5 +1,5 @@
 steps:
-  STG_CUSTOMER-7b9f1968-0250-4f27-93ee-8621ad93a90e:
+  STG_CUSTOMER-ca16c210-485f-4d88-82d9-327d3993754c:
     operation:
       config:
         insertStrategy: INSERT
@@ -14,14 +14,14 @@ steps:
       isDataVault: false
       isMultisource: false
       locationID: ""
-      locationName: EDW
+      locationName: ADW_PERSON
       materializationType: table
       metadata:
         appliedNodeTests: []
         columns:
           - columnReference:
-              columnCounter: fa06e93e-494d-4234-b52d-66d5681eca80
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: b07bc8b0-03ee-470b-a14e-3bbc2a4b1e90
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: NUMBER(38,0)
             description: ""
             hashColumns: []
@@ -34,8 +34,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: f3370c3e-8d7c-451f-9579-728e3c33c425
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: fc00fbf1-b39b-482b-9dbc-df0064dcc2ef
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: VARCHAR(25)
             description: ""
             hashColumns: []
@@ -48,8 +48,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: UPPER("CUSTOMER"."C_NAME")
           - columnReference:
-              columnCounter: d1d6cb45-1e71-4c55-af51-3395691cc478
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: cd6e9a2a-710c-41d0-94ad-e6a4c3d5315a
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: VARCHAR(40)
             description: ""
             hashColumns: []
@@ -62,8 +62,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: UPPER("CUSTOMER"."C_ADDRESS")
           - columnReference:
-              columnCounter: 4c69890d-7694-47ab-882b-1cbcf239cc55
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: 0afd9916-650a-4e02-a563-553eec4bdd60
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: NUMBER(38,0)
             description: ""
             hashColumns: []
@@ -76,8 +76,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 13a80cdc-6f59-4c01-a019-6ad4020b844e
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: 1fd31e96-0ae8-4efc-be43-7f13105e0ddc
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: VARCHAR(15)
             description: ""
             hashColumns: []
@@ -90,8 +90,8 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 92b0510d-cf13-407d-b023-43e5c9e0c973
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: 1cd6528a-75a4-4d1e-8b05-b25eab4429b3
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: NUMBER(12,2)
             description: ""
             hashColumns: []
@@ -104,8 +104,22 @@ steps:
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
                 transform: ""
           - columnReference:
-              columnCounter: 215f48af-d530-4ace-a7f3-ca6dbb78af5e
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: 43ae364f-50c7-4c05-8936-61bc27178ff6
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
+            dataType: VARCHAR(50)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: C_RATING
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: 4e722d5b-cb5a-4ec7-b446-a2f9853216cf
+                    stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
+                transform: CASE WHEN "CUSTOMER"."C_ACCTBAL" > 5000 THEN 'Gold' ELSE 'Silver' END
+          - columnReference:
+              columnCounter: 6676f3a5-7bc3-44ee-820f-2bbcf094beed
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: VARCHAR(10)
             description: ""
             hashColumns: []
@@ -116,24 +130,10 @@ steps:
               - columnReferences:
                   - columnCounter: 5ca0aefe-d7aa-4a4f-820b-c75ae7d0ceb7
                     stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
-                transform: ""
+                transform: UPPER("CUSTOMER"."C_MKTSEGMENT")
           - columnReference:
-              columnCounter: a49c6f21-18c7-4980-8f2d-8190ce439049
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
-            dataType: VARCHAR(10)
-            description: ""
-            hashColumns: []
-            hashDetails: null
-            name: CUST_RATING
-            nullable: true
-            sourceColumnReferences:
-              - columnReferences:
-                  - columnCounter: 5ca0aefe-d7aa-4a4f-820b-c75ae7d0ceb7
-                    stepCounter: 8ade5a9d-e4aa-4873-894c-30cdb9f6ee88
-                transform: CASE WHEN "CUSTOMER"."C_ACCTBAL" > 5000 THEN 'Gold' ELSE 'Silver' END
-          - columnReference:
-              columnCounter: fb70ff43-e988-4934-84ab-aaff4e792b0e
-              stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+              columnCounter: aabc649c-c267-454d-a367-6a2348169db7
+              stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
             dataType: VARCHAR(117)
             description: ""
             hashColumns: []
@@ -162,4 +162,4 @@ steps:
       schema: ""
       sqlType: Stage
       type: sql
-    stepCounter: 7b9f1968-0250-4f27-93ee-8621ad93a90e
+    stepCounter: ca16c210-485f-4d88-82d9-327d3993754c
