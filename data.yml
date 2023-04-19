@@ -1,5 +1,12 @@
 defaultStorageMapping: EDW
-jobs: {}
+jobs:
+  Job-35:
+    excludeSelector: ""
+    id: 35
+    includeSelector: "+{ location: EDW name: DIM_CUSTOMER }+"
+    name: Process Customer Data
+    steps: []
+    subgraphs: []
 locations:
   ADW_PERSON:
     mappingDefinitions:
