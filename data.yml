@@ -13,6 +13,21 @@ locations:
       "4":
         database: ""
         schema: ""
+  ADW_PRODUCTION:
+    mappingDefinitions:
+      "4":
+        database: ""
+        schema: ""
+  ADW_PURCHASING:
+    mappingDefinitions:
+      "4":
+        database: ""
+        schema: ""
+  ADW_SALES:
+    mappingDefinitions:
+      "4":
+        database: ""
+        schema: ""
   DEMO:
     mappingDefinitions:
       "4":
@@ -475,93 +490,7 @@ macros:
     packageInfo:
       id: SCALEFREE-DATAVAULT4COALESCE
       version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
-packages:
-  COALESCE-MISC:
-    addedBy: TNkJiAjrrXb7e8IuNyIhYUnzjL92
-    createdAt:
-      nanoseconds: 288000000
-      seconds: 1681929194
-    id: COALESCE-MISC
-    manifest:
-      macros: {}
-      stepTypes:
-        COALESCE-MISC::10:
-          id: COALESCE-MISC::10
-          name: Node Profilier
-        COALESCE-MISC::11:
-          id: COALESCE-MISC::11
-          name: De-Dupe
-        COALESCE-MISC::12:
-          id: COALESCE-MISC::12
-          name: Snapshot
-        COALESCE-MISC::13:
-          id: COALESCE-MISC::13
-          name: SQL
-        COALESCE-MISC::14:
-          id: COALESCE-MISC::14
-          name: Copy Into
-        COALESCE-MISC::15:
-          id: COALESCE-MISC::15
-          name: Stream and Insert or Merge
-        COALESCE-MISC::16:
-          id: COALESCE-MISC::16
-          name: Dynamic Table
-        COALESCE-MISC::2:
-          id: COALESCE-MISC::2
-          name: Unload
-        COALESCE-MISC::7:
-          id: COALESCE-MISC::7
-          name: CDC Table
-        COALESCE-MISC::8:
-          id: COALESCE-MISC::8
-          name: DATE
-        COALESCE-MISC::9:
-          id: COALESCE-MISC::9
-          name: External Table
-    status: added
-    version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
-    versionInfo:
-      commit: 71349fa630c1d0d718021fa8816717339e7f80c3
-  SCALEFREE-DATAVAULT4COALESCE:
-    addedBy: TNkJiAjrrXb7e8IuNyIhYUnzjL92
-    createdAt:
-      nanoseconds: 769000000
-      seconds: 1681929137
-    id: SCALEFREE-DATAVAULT4COALESCE
-    manifest:
-      macros:
-        SCALEFREE-DATAVAULT4COALESCE::1:
-          id: SCALEFREE-DATAVAULT4COALESCE::1
-          name: SCALEFREE-DATAVAULT4COALESCE::1
-      stepTypes:
-        SCALEFREE-DATAVAULT4COALESCE::12:
-          id: SCALEFREE-DATAVAULT4COALESCE::12
-          name: "Datavault by Scalefree: PIT"
-        SCALEFREE-DATAVAULT4COALESCE::13:
-          id: SCALEFREE-DATAVAULT4COALESCE::13
-          name: "Datavault by Scalefree: Snapshot v0"
-        SCALEFREE-DATAVAULT4COALESCE::14:
-          id: SCALEFREE-DATAVAULT4COALESCE::14
-          name: "Datavault by Scalefree: Snapshot v1"
-        SCALEFREE-DATAVAULT4COALESCE::4:
-          id: SCALEFREE-DATAVAULT4COALESCE::4
-          name: "Datavault by Scalefree: Stage"
-        SCALEFREE-DATAVAULT4COALESCE::6:
-          id: SCALEFREE-DATAVAULT4COALESCE::6
-          name: "Datavault by Scalefree: Hub"
-        SCALEFREE-DATAVAULT4COALESCE::7:
-          id: SCALEFREE-DATAVAULT4COALESCE::7
-          name: "Datavault by Scalefree: Link"
-        SCALEFREE-DATAVAULT4COALESCE::8:
-          id: SCALEFREE-DATAVAULT4COALESCE::8
-          name: "Datavault by Scalefree: Satellite v0"
-        SCALEFREE-DATAVAULT4COALESCE::9:
-          id: SCALEFREE-DATAVAULT4COALESCE::9
-          name: "Datavault by Scalefree: Satellite v1"
-    status: added
-    version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
-    versionInfo:
-      commit: 3b5d7f00506562dc0c0646f91869987d8afb0002
+packages: {}
 projects: {}
 stepTypes:
   StepType-COALESCE-MISC::10:
@@ -1470,7 +1399,7 @@ stepTypes:
     version: 1
   StepType-COALESCE-MISC::13:
     id: COALESCE-MISC::13
-    isDisabled: false
+    isDisabled: true
     metadata:
       defaultStorageLocation: null
       error: null
