@@ -1,55 +1,67 @@
 defaultStorageMapping: EDW
-jobs:
-  Job-35:
-    excludeSelector: ""
-    id: 35
-    includeSelector: "+{ location: EDW name: DIM_CUSTOMER }+"
-    name: Process Customer Data
-    steps: []
-    subgraphs: []
+jobs: {}
 locations:
   ADW_PERSON:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: CLS_PERSON
       "4":
-        database: ""
-        schema: ""
+        database: CLS_QA_DB
+        schema: CLS_PERSON
   ADW_PRODUCTION:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: CLS_PRODUCTION
       "4":
-        database: ""
-        schema: ""
+        database: CLS_QA_DB
+        schema: CLS_PRODUCTION
   ADW_PURCHASING:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: CLS_PURCHASING
       "4":
-        database: ""
-        schema: ""
+        database: CLS_QA_DB
+        schema: CLS_PURCHASING
   ADW_SALES:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: CLS_SALES
       "4":
-        database: ""
-        schema: ""
+        database: CLS_QA_DB
+        schema: CLS_SALES
   DEMO:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: DEMO
       "4":
         database: CLS_PROD_DB
         schema: DEMO
   EDW:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: DEMO
       "4":
         database: COALESCE_EDW_QA
         schema: EDW
-  FTRAN_SRC:
-    mappingDefinitions:
-      "4":
-        database: ""
-        schema: ""
   SJ_DEMO_DEV:
     mappingDefinitions:
+      "14":
+        database: CLS_QA_DB
+        schema: DEMO
       "4":
         database: SATISH_DEMO_DEV
         schema: PUBLIC
   SRC:
     mappingDefinitions:
+      "14":
+        database: SNOWFLAKE_SAMPLE_DATA
+        schema: TPCH_SF10
       "4":
         database: COALESCE_SAMPLE_DATABASE
         schema: TPCH_SF001
@@ -490,7 +502,93 @@ macros:
     packageInfo:
       id: SCALEFREE-DATAVAULT4COALESCE
       version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
-packages: {}
+packages:
+  COALESCE-MISC:
+    addedBy: TNkJiAjrrXb7e8IuNyIhYUnzjL92
+    createdAt:
+      nanoseconds: 288000000
+      seconds: 1681929194
+    id: COALESCE-MISC
+    manifest:
+      macros: {}
+      stepTypes:
+        COALESCE-MISC::10:
+          id: COALESCE-MISC::10
+          name: Node Profilier
+        COALESCE-MISC::11:
+          id: COALESCE-MISC::11
+          name: De-Dupe
+        COALESCE-MISC::12:
+          id: COALESCE-MISC::12
+          name: Snapshot
+        COALESCE-MISC::13:
+          id: COALESCE-MISC::13
+          name: SQL
+        COALESCE-MISC::14:
+          id: COALESCE-MISC::14
+          name: Copy Into
+        COALESCE-MISC::15:
+          id: COALESCE-MISC::15
+          name: Stream and Insert or Merge
+        COALESCE-MISC::16:
+          id: COALESCE-MISC::16
+          name: Dynamic Table
+        COALESCE-MISC::2:
+          id: COALESCE-MISC::2
+          name: Unload
+        COALESCE-MISC::7:
+          id: COALESCE-MISC::7
+          name: CDC Table
+        COALESCE-MISC::8:
+          id: COALESCE-MISC::8
+          name: DATE
+        COALESCE-MISC::9:
+          id: COALESCE-MISC::9
+          name: External Table
+    status: added
+    version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
+    versionInfo:
+      commit: 71349fa630c1d0d718021fa8816717339e7f80c3
+  SCALEFREE-DATAVAULT4COALESCE:
+    addedBy: TNkJiAjrrXb7e8IuNyIhYUnzjL92
+    createdAt:
+      nanoseconds: 769000000
+      seconds: 1681929137
+    id: SCALEFREE-DATAVAULT4COALESCE
+    manifest:
+      macros:
+        SCALEFREE-DATAVAULT4COALESCE::1:
+          id: SCALEFREE-DATAVAULT4COALESCE::1
+          name: SCALEFREE-DATAVAULT4COALESCE::1
+      stepTypes:
+        SCALEFREE-DATAVAULT4COALESCE::12:
+          id: SCALEFREE-DATAVAULT4COALESCE::12
+          name: "Datavault by Scalefree: PIT"
+        SCALEFREE-DATAVAULT4COALESCE::13:
+          id: SCALEFREE-DATAVAULT4COALESCE::13
+          name: "Datavault by Scalefree: Snapshot v0"
+        SCALEFREE-DATAVAULT4COALESCE::14:
+          id: SCALEFREE-DATAVAULT4COALESCE::14
+          name: "Datavault by Scalefree: Snapshot v1"
+        SCALEFREE-DATAVAULT4COALESCE::4:
+          id: SCALEFREE-DATAVAULT4COALESCE::4
+          name: "Datavault by Scalefree: Stage"
+        SCALEFREE-DATAVAULT4COALESCE::6:
+          id: SCALEFREE-DATAVAULT4COALESCE::6
+          name: "Datavault by Scalefree: Hub"
+        SCALEFREE-DATAVAULT4COALESCE::7:
+          id: SCALEFREE-DATAVAULT4COALESCE::7
+          name: "Datavault by Scalefree: Link"
+        SCALEFREE-DATAVAULT4COALESCE::8:
+          id: SCALEFREE-DATAVAULT4COALESCE::8
+          name: "Datavault by Scalefree: Satellite v0"
+        SCALEFREE-DATAVAULT4COALESCE::9:
+          id: SCALEFREE-DATAVAULT4COALESCE::9
+          name: "Datavault by Scalefree: Satellite v1"
+    status: added
+    version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
+    versionInfo:
+      commit: 3b5d7f00506562dc0c0646f91869987d8afb0002
 projects: {}
 stepTypes:
   StepType-COALESCE-MISC::10:
@@ -6256,4 +6354,4 @@ stepTypes:
     name: Persistent Stage
     version: 1
 subgraphs: {}
-version: 1
+version: 2
