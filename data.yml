@@ -1,4 +1,5 @@
 defaultStorageMapping: EDW
+installedPackages: {}
 jobs: {}
 locations:
   ADW_PERSON:
@@ -6,15 +7,9 @@ locations:
       "14":
         database: CLS_QA_DB
         schema: CLS_PERSON
-      "4":
-        database: CLS_QA_DB
-        schema: CLS_PERSON
   ADW_PRODUCTION:
     mappingDefinitions:
       "14":
-        database: CLS_QA_DB
-        schema: CLS_PRODUCTION
-      "4":
         database: CLS_QA_DB
         schema: CLS_PRODUCTION
   ADW_PURCHASING:
@@ -22,15 +17,9 @@ locations:
       "14":
         database: CLS_QA_DB
         schema: CLS_PURCHASING
-      "4":
-        database: CLS_QA_DB
-        schema: CLS_PURCHASING
   ADW_SALES:
     mappingDefinitions:
       "14":
-        database: CLS_QA_DB
-        schema: CLS_SALES
-      "4":
         database: CLS_QA_DB
         schema: CLS_SALES
   DEMO:
@@ -38,33 +27,21 @@ locations:
       "14":
         database: CLS_QA_DB
         schema: DEMO
-      "4":
-        database: CLS_PROD_DB
-        schema: DEMO
   EDW:
     mappingDefinitions:
       "14":
         database: CLS_QA_DB
         schema: DEMO
-      "4":
-        database: COALESCE_EDW_QA
-        schema: EDW
   SJ_DEMO_DEV:
     mappingDefinitions:
       "14":
         database: CLS_QA_DB
         schema: DEMO
-      "4":
-        database: SATISH_DEMO_DEV
-        schema: PUBLIC
   SRC:
     mappingDefinitions:
       "14":
         database: SNOWFLAKE_SAMPLE_DATA
         schema: TPCH_SF10
-      "4":
-        database: COALESCE_SAMPLE_DATABASE
-        schema: TPCH_SF001
 macros:
   Macro-SCALEFREE-DATAVAULT4COALESCE::1:
     id: SCALEFREE-DATAVAULT4COALESCE::1
@@ -591,6 +568,115 @@ packages:
       commit: 3b5d7f00506562dc0c0646f91869987d8afb0002
 projects: {}
 stepTypes:
+  StepType-191:
+    id: "191"
+    isDisabled: false
+    metadata:
+      defaultStorageLocation: null
+      error: null
+      nodeMetadataSpec: |
+        capitalized: Stream
+        short: STR
+        tagColor: "yellow"
+        plural: CDC Tables
+
+        deployStrategy: advanced
+
+        config:
+
+        - groupName: Task
+          items:
+
+          - displayName: Initial Rows
+            attributeName: initialRows
+            type: toggleButton
+            default: true
+            isRequired: false
+
+          - displayName: Append Only
+            attributeName: appendOnly
+            type: toggleButton
+            default: false
+            isRequired: false
+
+        - groupName: Hidden config
+          enableIf: "false"
+          items:
+          - displayName: Type
+            type: materializationSelector
+            default: view
+            options:
+            - view
+            isRequired: true
+
+        systemColumns:
+        - displayName: "METADATA$ACTION"
+          transform: "METADATA$ACTION"
+          dataType: STRING
+          placement: end
+          attributeName: isStreamMetadataAction
+          description: Indicates the DML operation (INSERT, DELETE) recorded.
+        - displayName: "METADATA$ISUPDATE"
+          transform: "METADATA$ISUPDATE"
+          dataType: STRING
+          placement: end
+          attributeName: isStreamMetadataIsUpdate
+          description: Indicates whether the operation was part of an UPDATE statement.
+        - displayName: "METADATA$ROW_ID"
+          transform: "METADATA$ROW_ID"
+          dataType: STRING
+          placement: end
+          attributeName: isStreamMetadataRowId
+          description: Specifies the unique and immutable ID for the row, which can be used to track changes to specific rows over time.
+      templates:
+        create:
+          templateString: |-
+            {% if desiredState == undefined %}
+              {{ stage('Drop Dynamic Table') }}
+              DROP STREAM {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
+
+            {% else %}
+
+                {{ stage('Create Stream') }}
+                CREATE OR REPLACE STREAM {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
+                ON TABLE {{ ref(desiredState.sources[0].dependencies[0].node.location.name, desiredState.sources[0].dependencies[0].node.name) }}
+                APPEND_ONLY = {% if desiredState.config.appendOnly is true %} TRUE {%- else -%} FALSE {% endif %} 
+                SHOW_INITIAL_ROWS = {% if desiredState.config.initialRows is true %} TRUE {%- else -%} FALSE {% endif %} 
+                COMMENT = 'CDC Stream on {{ this }}'
+
+            {% endif %}
+        run:
+          templateString: |-
+            {% if config.taskEnabled is true %}
+                {{ stage('Resume Task') }}
+                ALTER TASK
+                {% if config.taskCustomName != '' %}
+                    {{ ref_no_link(node.location.name, config.taskCustomName) }}
+                {% else %}
+                    {{ ref_no_link(node.location.name, "TSK_" + node.name) }}
+                {% endif %}
+                RESUME
+            {% else %}
+                {{ stage('Insert From Stream') }}
+                INSERT INTO {{ ref_no_link(node.location.name, node.name) }}
+                {% for source in sources %}
+                    SELECT
+                    {% for col in source.columns %}
+                        {% if col.name == 'CDC_ID' %}
+                            {{ ref_no_link(node.location.name, "SEQ_" + node.name) }}.NEXTVAL
+                        {% else %}
+                            {{ get_source_transform(col) }}
+                        {% endif %} AS "{{ col.name }}"
+                        {%- if not loop.last -%}, {% endif %}
+                    {% endfor %}
+                    FROM {{ ref_no_link(node.location.name, "STR_" + node.name) }} AS "{{ sources[0].dependencies[0].node.name }}"
+                    {% if config.insertStrategy in ['UNION', 'UNION ALL'] and not loop.last %}
+                        {{config.insertStrategy}}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+    name: Stream
+    version: 1
   StepType-COALESCE-MISC::10:
     id: COALESCE-MISC::10
     isDisabled: false
@@ -1017,9 +1103,6 @@ stepTypes:
 
             {% endif %}
     name: Node Profilier
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::11:
     id: COALESCE-MISC::11
@@ -1271,9 +1354,6 @@ stepTypes:
             {# {% endif %}    #}  
                     
     name: De-Dupe
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::12:
     id: COALESCE-MISC::12
@@ -1491,9 +1571,6 @@ stepTypes:
             	{% endfor %}
             {% endif %}
     name: Snapshot
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::13:
     id: COALESCE-MISC::13
@@ -1550,9 +1627,6 @@ stepTypes:
             	{{ config.SQL1 }}
             {% endif %}
     name: SQL
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::14:
     id: COALESCE-MISC::14
@@ -1729,9 +1803,6 @@ stepTypes:
                 {{ filePatternSQL }}
                 FILE_FORMAT = (FORMAT_NAME = "{{ db }}"."{{ sch }}".{{ config.fileFormatName}})
     name: Copy Into
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::15:
     id: COALESCE-MISC::15
@@ -2029,9 +2100,6 @@ stepTypes:
         run:
           templateString: ""
     name: Stream and Insert or Merge
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::16:
     id: COALESCE-MISC::16
@@ -2276,9 +2344,6 @@ stepTypes:
             	{%- endfor %}
             {%- endif %}
     name: Dynamic Table
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::2:
     id: COALESCE-MISC::2
@@ -2423,13 +2488,10 @@ stepTypes:
                 {% endfor %}
             {% endfor %}
     name: Unload
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::7:
     id: COALESCE-MISC::7
-    isDisabled: false
+    isDisabled: true
     metadata:
       defaultStorageLocation: null
       error: null
@@ -2663,9 +2725,6 @@ stepTypes:
 
             {% endif %}
     name: CDC Table
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::8:
     id: COALESCE-MISC::8
@@ -2835,9 +2894,6 @@ stepTypes:
                 {{ config.postSQL }}
             {% endif %}
     name: DATE
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-COALESCE-MISC::9:
     id: COALESCE-MISC::9
@@ -3027,9 +3083,6 @@ stepTypes:
             ALTER EXTERNAL TABLE {{ ref_no_link(node.location.name, node.name) }} REFRESH
             {% endif %}
     name: External Table
-    packageInfo:
-      id: COALESCE-MISC
-      version: https://github.com/Coalesce-Software-Inc/packages.git#misc_nodes
     version: 1
   StepType-Dimension:
     id: Dimension
@@ -3301,57 +3354,73 @@ stepTypes:
                                 )
                             {% endif %}
                         {% endfor %}
-                        UNION ALL
-                        /* Rows Needing To Be Updated Due To Changes To Non-Type-2 source.columns
-                        This case merges only when there are changes in non-type-2 column updates, but no changes in type-2 columns*/
-                        SELECT
-                        {%- for col in source.columns if not col.isSurrogateKey %}
-                            {% if col.isSystemVersion or col.isSystemCreateDate or col.isSystemStartDate or col.isSystemEndDate %}
-                                "DIM"."{{ col.name }}"
-                            {% elif col.isSystemCurrentFlag %}
-                                'Y'
-                            {% else %}
-                                {{ get_source_transform(col) }}
-                            {% endif %}
-                            AS "{{ col.name }}",
-                        {% endfor -%}
-                            'UPDATE_NON_TYPE2_ROWS' AS "DML_OPERATION"
-                        {{ source.join }}
-                        INNER JOIN {{ ref_no_link(node.location.name, node.name) }} "DIM" ON
-                        {% for col in source.columns if col.isBusinessKey -%}
-                            {% if not loop.first %}
-                                AND
-                            {% endif %}
-                            {{ get_source_transform(col) }} = "DIM"."{{ col.name }}"
-                        {% endfor %}
-                        WHERE "DIM"."{{ get_value_by_column_attribute("isSystemCurrentFlag") }}" = 'Y'
-                        AND (
-                        {% for col in source.columns if (col.isChangeTracking) -%}
-                            {% if not loop.first %}
-                                AND
-                            {% endif %}
-                            {{ get_source_transform(col) }} = "DIM"."{{ col.name }}"
-                        {% endfor %} )
-                        {% for col in source.columns if not (   col.isBusinessKey or
-                                                                col.isChangeTracking or
-                                                                col.isSurrogateKey or
-                                                                col.isSystemVersion or
-                                                                col.isSystemCurrentFlag or
-                                                                col.isSystemStartDate or
-                                                                col.isSystemEndDate or
-                                                                col.isSystemUpdateDate or
-                                                                col.isSystemCreateDate) -%}
-                            {% if loop.first %}
-                                AND (
-                            {% endif %}
-                            {% if not loop.first %}
-                                OR
-                            {% endif %}
-                            NVL( CAST({{ get_source_transform(col) }} as STRING), '**NULL**') <> NVL( CAST("DIM"."{{ col.name }}" as STRING), '**NULL**')
-                            {% if loop.last %}
-                                )
-                            {% endif %}
-                        {% endfor %}
+                        {# The if-block below avoids unnecessary updates when no type 2 column changes are present #}
+                        {% if source.columns 
+                            | rejectattr('isSurrogateKey')
+                            | rejectattr('isBusinessKey')
+                            | rejectattr('isChangeTracking')
+                            | rejectattr('isSystemVersion')
+                            | rejectattr('isSystemCurrentFlag')
+                            | rejectattr('isSystemStartDate')
+                            | rejectattr('isSystemEndDate')
+                            | rejectattr('isSystemCreateDate')
+                            | rejectattr('isSystemUpdateDate') 
+                            | list | length == 0 
+                        %}
+                            {# Skip Section #}
+                        {% else %}
+                          UNION ALL
+                          /* Rows Needing To Be Updated Due To Changes To Non-Type-2 columns
+                          This case merges only when there are changes in non-type-2 column updates, but no changes in type-2 columns*/
+                          SELECT
+                          {%- for col in source.columns if not col.isSurrogateKey %}
+                              {% if col.isSystemVersion or col.isSystemCreateDate or col.isSystemStartDate or col.isSystemEndDate %}
+                                  "DIM"."{{ col.name }}"
+                              {% elif col.isSystemCurrentFlag %}
+                                  'Y'
+                              {% else %}
+                                  {{ get_source_transform(col) }}
+                              {% endif %}
+                              AS "{{ col.name }}",
+                          {% endfor -%}
+                              'UPDATE_NON_TYPE2_ROWS' AS "DML_OPERATION"
+                          {{ source.join }}
+                          INNER JOIN {{ ref_no_link(node.location.name, node.name) }} "DIM" ON
+                          {% for col in source.columns if col.isBusinessKey -%}
+                              {% if not loop.first %}
+                                  AND
+                              {% endif %}
+                              {{ get_source_transform(col) }} = "DIM"."{{ col.name }}"
+                          {% endfor %}
+                          WHERE "DIM"."{{ get_value_by_column_attribute("isSystemCurrentFlag") }}" = 'Y'
+                          AND (
+                          {% for col in source.columns if (col.isChangeTracking) -%}
+                              {% if not loop.first %}
+                                  AND
+                              {% endif %}
+                              {{ get_source_transform(col) }} = "DIM"."{{ col.name }}"
+                          {% endfor %} )
+                          {% for col in source.columns if not (   col.isBusinessKey or
+                                                                  col.isChangeTracking or
+                                                                  col.isSurrogateKey or
+                                                                  col.isSystemVersion or
+                                                                  col.isSystemCurrentFlag or
+                                                                  col.isSystemStartDate or
+                                                                  col.isSystemEndDate or
+                                                                  col.isSystemUpdateDate or
+                                                                  col.isSystemCreateDate) -%}
+                              {% if loop.first %}
+                                  AND (
+                              {% endif %}
+                              {% if not loop.first %}
+                                  OR
+                              {% endif %}
+                              NVL( CAST({{ get_source_transform(col) }} as STRING), '**NULL**') <> NVL( CAST("DIM"."{{ col.name }}" as STRING), '**NULL**')
+                              {% if loop.last %}
+                                  )
+                              {% endif %}
+                          {% endfor %}
+                        {% endif %}
                     ) AS "SRC"
                     ON
                     {% for col in source.columns if col.isBusinessKey -%}
@@ -4191,9 +4260,6 @@ stepTypes:
             	{{ config.postSQL }}
             {% endif %}
     name: "Datavault by Scalefree: PIT"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::13:
     id: SCALEFREE-DATAVAULT4COALESCE::13
@@ -4396,9 +4462,6 @@ stepTypes:
 
             {%- if node.description | length > 0 %} COMMENT = '{{ node.description }}'{% endif %}
     name: "Datavault by Scalefree: Snapshot v0"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::14:
     id: SCALEFREE-DATAVAULT4COALESCE::14
@@ -4817,9 +4880,6 @@ stepTypes:
         run:
           templateString: ""
     name: "Datavault by Scalefree: Snapshot v1"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::4:
     id: SCALEFREE-DATAVAULT4COALESCE::4
@@ -4958,9 +5018,6 @@ stepTypes:
         run:
           templateString: ""
     name: "Datavault by Scalefree: Stage"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::6:
     id: SCALEFREE-DATAVAULT4COALESCE::6
@@ -5078,9 +5135,6 @@ stepTypes:
             	{{ config.postSQL }}
             {% endif %}
     name: "Datavault by Scalefree: Hub"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::7:
     id: SCALEFREE-DATAVAULT4COALESCE::7
@@ -5188,9 +5242,6 @@ stepTypes:
                 {{ config.postSQL }}    
             {% endif %}
     name: "Datavault by Scalefree: Link"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::8:
     id: SCALEFREE-DATAVAULT4COALESCE::8
@@ -5315,9 +5366,6 @@ stepTypes:
             	{{ config.postSQL }}
             {% endif %}
     name: "Datavault by Scalefree: Satellite v0"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-SCALEFREE-DATAVAULT4COALESCE::9:
     id: SCALEFREE-DATAVAULT4COALESCE::9
@@ -5409,9 +5457,6 @@ stepTypes:
         run:
           templateString: ""
     name: "Datavault by Scalefree: Satellite v1"
-    packageInfo:
-      id: SCALEFREE-DATAVAULT4COALESCE
-      version: https://github.com/ScalefreeCOM/datavault4coalesce.git#main
     version: 1
   StepType-Satellite:
     id: Satellite
