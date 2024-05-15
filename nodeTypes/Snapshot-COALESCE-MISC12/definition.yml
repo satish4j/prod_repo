@@ -1,0 +1,89 @@
+fileVersion: 1
+id: COALESCE-MISC::12
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: Snapshot
+    short: SNAP
+    plural: Snapshots
+    tagColor: 'black'
+
+    config:
+
+    - groupName: About this Node
+      items:
+      - displayName: Description
+        attributename: description
+        type: textBox
+        isRequired: false
+        default: "This node takes a single historical data table such as a type2 dimension or a data vault satellite  and normalizes the data to a desired snapshot period.\nHere are the steps on how to use this node:\n
+        
+          1. Create this node on an existing historical data table\n
+          2. After creating the node, you'll notice a new column called SNAPSHOT_DATE added at the beginning. Do not delete or rename this column\n
+          3. Under the Source Table Info config section, select the business key column, and also the date column from the source table that indicates when the source record was loaded. Note that this is not the SNAPSHOT_DATE that was added automatically\n
+          4. Under the Snapshot Options, select the snapshot period, number of snapshots, and the calendar startdate for which the snapshots are being generated\n
+          "
+    - groupName: Options
+      items:
+      - type: materializationSelector
+        default: table
+        options:
+        - table
+        isRequired: true
+
+      - displayName: Enable Tests
+        attributeName: testsEnabled
+        type: toggleButton
+        default: true
+
+      - displayName: Truncate Before
+        attributeName: truncateBefore
+        type: toggleButton
+        default: true
+
+    - groupName: Source Table Info
+      items:
+      - type: businessKeyColumns
+        isRequired: true
+
+      - type: columnSelector
+        displayName : Date Column
+        attributeName : dateColumnSource
+        isRequired: true
+
+
+    - groupName: Snapshot Options
+      items:
+      - displayName: Period
+        attributeName: snapshotPeriod
+        type: dropdownSelector
+        default: "Month"
+        options:
+        - "Day"
+        - "Week"
+        - "Month"
+        - "Quarter"
+        - "Year"
+        isRequired: true
+
+      - displayName: Number of Snapshots
+        attributeName: snapshotsToGenerate
+        type: textBox
+        default: '1'
+
+      - displayName: Start Date
+        attributeName: startDate
+        type: textBox
+        syntax: sql
+        default: 'DATEADD(DAY, -1, CURRENT_DATE)'
+
+    systemColumns:
+    - displayName: SNAPSHOT_DATE
+      transform: ''
+      dataType: 'DATE'
+      placement: beginning
+      attributeName: isSnapShotDate
+name: Snapshot
+type: NodeType

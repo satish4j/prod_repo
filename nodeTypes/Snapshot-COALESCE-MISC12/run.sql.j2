@@ -1,0 +1,108 @@
+{% for test in node.tests if config.testsEnabled %}
+	{% if test.runOrder == 'Before' %}
+		{{ test_stage(test.name, test.continueOnFailure) }}
+		{{ test.templateString }}
+	{% endif %}
+{% endfor %}
+
+	
+{% if config.truncateBefore %}
+	{{ stage('Truncate Stage Table') }}
+	TRUNCATE IF EXISTS {{ ref_no_link(node.location.name, node.name) }}
+{% endif %}
+
+
+{% for source in sources %}
+
+	{{ stage('Insert ' + source.name | string ) }}
+
+    {# 'set the number of calendar days '#}
+	{%with no_of_cal_days = 0 %} {% endwith %}
+    
+	 {% if config.snapshotPeriod == 'Day' %}
+        {% set no_of_cal_days = config.snapshotsToGenerate %}
+    {% elif config.snapshotPeriod == 'Week' %}
+        {% set no_of_cal_days = config.snapshotsToGenerate + ' * 7' %}
+    {% elif config.snapshotPeriod == 'Month' %}
+        {% set no_of_cal_days = config.snapshotsToGenerate + ' * 31' %}
+    {% elif config.snapshotPeriod == 'Quarter' %}
+        {% set no_of_cal_days = config.snapshotsToGenerate + ' * 93' %}
+    {% elif config.snapshotPeriod == 'Year' %}
+        {% set no_of_cal_days = config.snapshotsToGenerate + ' * 365' %}     
+    {% endif %}
+
+	{# 'set source table name '#}
+	{%with src_table_name = '' %} {% endwith %}
+    {% set src_table_name = sources[0].dependencies[0].node.name %}
+
+	{# 'set date source column name. this is the date/timestamp column in the source table '#}
+	{%with src_date_col_name = 'LOAD_DATE' %} {% endwith %}
+	{% for col in source.columns if col.dateColumnSource -%}
+		    {% set src_date_col_name =  'LOAD_DATE'  %}
+	{% endfor %}
+
+
+	INSERT INTO {{ ref_no_link(node.location.name, node.name) }}
+	(
+		{% for col in source.columns %}
+			"{{ col.name }}"
+			{%- if not loop.last -%},{% endif %}
+		{% endfor %}
+	)
+
+    WITH tblCAL AS(
+    SELECT
+      DATEADD(DAY, SEQ4(), DATEADD(DAY, -1, {{config.startDate}})) AS "DATE_COL"
+    FROM  TABLE(GENERATOR(ROWCOUNT => {{ no_of_cal_days }} ))
+     ),
+    tblPeriods AS (
+      SELECT DATE_COL AS SNAPSHOT_DATE FROM tblCAL 
+	  {% if not config.snapshotPeriod == 'Day' %}
+		WHERE LAST_DAY(DATE_COL,{{config.snapshotPeriod}}) = DATE_COL
+	  {% endif%}
+       )
+   SELECT
+	{% for col in source.columns %}
+	    {%- if col.name == 'SNAPSHOT_DATE' %} P.SNAPSHOT_DATE
+		{% else %}  {{ get_source_transform(col) }} AS "{{ col.name }}"
+		{% endif %}
+		{%- if not loop.last -%}, {% endif %}
+	{% endfor %}
+    FROM tblPeriods P LEFT JOIN {{ ref_no_link(sources[0].dependencies[0].node.location.name, src_table_name) }}
+        ON {{ src_table_name }} {{'.'}} LOAD_DATE < P.SNAPSHOT_DATE
+		WHERE 
+		{% for col in source.columns if col.isBusinessKey -%}
+		  {% if not loop.first %} AND {% endif %}
+               {{ col.name }} IS NOT NULL 
+        {% endfor %}
+	
+        QUALIFY row_number() OVER (PARTITION BY SNAPSHOT_DATE,
+			{% for col in source.columns if col.isBusinessKey -%}
+					{% if not loop.first %} , {% endif %}
+					{{ col.name }}
+			{% endfor %}
+		ORDER BY LOAD_DATE DESC) = 1
+        ORDER BY SNAPSHOT_DATE, 
+		    {% for col in source.columns if col.isBusinessKey -%}
+                {% if not loop.first %} , {% endif %}
+				{{ col.name }}
+            {% endfor %}
+
+{% endfor %}
+	
+
+{% if config.testsEnabled %}
+	{% for test in node.tests %}
+		{% if test.runOrder == 'After' %}
+			{{ test_stage(test.name, test.continueOnFailure) }}
+			{{ test.templateString }}
+        {% endif %}
+	{% endfor %}
+
+	{% for column in columns %}
+		{% for test in column.tests %}
+			{{ test_stage(column.name + ": " + test.name) }}
+			{{ test.templateString }}
+		{% endfor %}
+	{% endfor %}
+{% endif %}

@@ -1,0 +1,41 @@
+fileVersion: 1
+id: COALESCE-MISC::11
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: De-Dupe
+    short: DE_DUPE
+    tagColor: violet
+    plural: De-Dupes
+
+
+
+    config:
+    - groupName: De-Dupe Config
+      items:
+
+      - displayName: Primary Key
+        attributeName: isBusKey
+        type: columnSelector
+        isRequired: true
+
+      - displayName: Exact Match ALL
+        attributeName: isExactMatchALL
+        type: columnSelector
+        isRequired: true
+      
+      - displayName: Exact Match ANY
+        attributeName: isExactMatchANY
+        type: columnSelector
+        isRequired: true
+
+    systemColumns:
+    - displayName: GROUP_ID
+      transform: ''
+      dataType: INT
+      placement: end
+      attributeName: group_id
+name: De-Dupe
+type: NodeType

@@ -1,0 +1,29 @@
+fileVersion: 1
+id: "14"
+mappingDefinitions:
+  ADW_PERSON:
+    database: CLS_QA_DB
+    schema: CLS_PERSON
+  ADW_PRODUCTION:
+    database: CLS_QA_DB
+    schema: CLS_PRODUCTION
+  ADW_PURCHASING:
+    database: CLS_QA_DB
+    schema: CLS_PURCHASING
+  ADW_SALES:
+    database: CLS_QA_DB
+    schema: CLS_SALES
+  DEMO:
+    database: CLS_QA_DB
+    schema: DEMO
+  EDW:
+    database: CLS_QA_DB
+    schema: DEMO
+  SJ_DEMO_DEV:
+    database: CLS_QA_DB
+    schema: DEMO
+  SRC:
+    database: SNOWFLAKE_SAMPLE_DATA
+    schema: TPCH_SF10
+name: QA
+type: Environment

@@ -1,0 +1,6 @@
+excludeSelector: ""
+fileVersion: 1
+id: "40"
+includeSelector: "+{ location: EDW name: STG_LINEITEM }+"
+name: New Job
+type: Job

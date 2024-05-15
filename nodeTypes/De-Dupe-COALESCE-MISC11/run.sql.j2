@@ -1,0 +1,152 @@
+{{ stage('Truncate Stage Table') }}
+			TRUNCATE IF EXISTS {{ ref_no_link(node.location.name, node.name) }}
+
+{#{% if columns | selectattr('isExactMatchALL') | list | length > 0 %} #}
+
+  {{ stage('Create edges table') }}
+  CREATE OR REPLACE TABLE {{ ref_no_link(node.location.name, 'tblEdge') }}
+  (
+    ROW_ID INT IDENTITY START 1 INCREMENT 1,
+    GROUP_NO INT NULL DEFAULT 0
+    ,LFT VARCHAR(50) NULL
+    ,RGT VARCHAR(50) NULL
+  )
+
+  {# 'INITIALIZE variables '#}
+	{# 'set source table name '#}
+  {% set src_table_name = sources[0].dependencies[0].node.name %}
+
+	{# 'set business key name '#}
+  {% set ns = namespace() %}
+  {% set ns.business_key = '<no business key found>' %}
+  {%- for col in columns %}
+    {% if col.isBusKey %}
+        {% set ns.business_key = col.name  %}
+    {% endif %}
+  {% endfor %}
+  
+  
+
+  {{ stage('find and insert edges') }}
+  INSERT INTO {{ ref_no_link(node.location.name, 'tblEdge') }} 
+  (LFT,RGT) 
+  {%- for colANY in columns  if colANY.isExactMatchANY %}
+  
+
+  SELECT * FROM(
+  WITH tblA AS(       
+    SELECT
+			{% for col in sources[0].columns %}
+                {{ get_source_transform(col) }} AS "{{ col.name }}"
+				{%- if not loop.last -%}, {% endif %}
+			{% endfor %} 
+    ,ROW_NUMBER() OVER (PARTITION BY
+        {%- for col in columns  if col.isExactMatchALL %}
+                "{{ col.name }}"
+              {% if not loop.last %}, {% endif %} 
+        {% endfor %} 
+        , "{{ colANY.name }}"
+        ORDER BY
+        {%- for col in columns  if col.isBusKey %}
+                "{{ col.name }}"
+              {% if not loop.last %}, {% endif %} 
+        {% endfor %}) AS ROW_NUM
+            {{ sources[0].join }} 
+  )
+    SELECT 
+       {%- for col in columns  if col.isBusKey %}
+                L."{{ col.name }}",R."{{ col.name }}"
+              {% if not loop.last %}, {% endif %} 
+        {% endfor %}
+    FROM tblA L INNER JOIN tblA R
+    ON  {%- for col in columns  if col.isExactMatchALL %}
+               L."{{ col.name }}" = R."{{ col.name }}"
+              {% if not loop.last %} AND {% endif %} 
+        {% endfor %} 
+    AND L."{{ colANY.name }}" = R."{{ colANY.name }}"
+    AND L.ROW_NUM = R.ROW_NUM - 1
+    WHERE TRIM(NVL(L."{{ colANY.name }}",'')) <> '' AND TRIM(NVL(R."{{ colANY.name }}",'')) <> ''
+  )
+ {% if not loop.last %}UNION {% endif %} 
+
+ {% endfor %} 
+
+ 
+{{ stage('Identify groups and assign a number') }}
+
+  EXECUTE IMMEDIATE $$
+  BEGIN
+  WHILE ( (SELECT COUNT(*) FROM {{ ref_no_link(node.location.name, 'tblEdge') }}  WHERE GROUP_NO = 0) > 0)  DO
+  
+  UPDATE {{ ref_no_link(node.location.name, 'tblEdge') }}  e1
+   SET GROUP_NO = g1.GROUP_NO
+   FROM(
+          WITH max_Group_no AS(
+                SELECT MAX(GROUP_NO) AS GROUP_NO FROM {{ ref_no_link(node.location.name, 'tblEdge') }} 
+          ) 
+             , cte_tblGroup AS(
+              SELECT TOP 1 ROW_ID,mg.GROUP_NO + 1 AS GROUP_NO,LFT,RGT FROM {{ ref_no_link(node.location.name, 'tblEdge') }}  e ,max_Group_no mg WHERE e.GROUP_NO = 0 
+               UNION ALL
+              SELECT e.ROW_ID,g.GROUP_NO ,e.LFT,e.RGT
+              FROM {{ ref_no_link(node.location.name, 'tblEdge') }}  e 
+                 INNER JOIN cte_tblGroup g  ON (e.lft = g.lft OR e.lft = g.rgt OR e.rgt = g.rgt OR e.rgt = g.lft)  
+              WHERE e.ROW_ID > g.ROW_ID
+                  )
+       SELECT * FROM cte_tblGroup
+      ) AS g1
+  WHERE e1.ROW_ID = g1.ROW_ID;
+  END WHILE;
+  END;
+ $$
+;
+
+ {{ stage('Final Result') }}
+
+ {% for source in sources %}
+  
+ INSERT INTO {{ ref_no_link(node.location.name, node.name) }}
+        (
+          {% for col in columns %}
+            "{{ col.name }}"
+            {%- if not loop.last -%},{% endif %}
+          {% endfor %}
+        )
+
+    SELECT DISTINCT
+			{% for col in source.columns %}
+         {% if col.name != 'GROUP_ID' %}    
+             {{ get_source_transform(col) }} AS "{{ col.name }}"
+          {% else %}   
+              E.GROUP_NO
+          {% endif %}  
+				{%- if not loop.last -%}, {% endif %}
+			{% endfor %}
+  	{{ source.join }}	 
+    INNER JOIN {{ ref_no_link(node.location.name, 'tblEdge') }}  "E"
+     ON {{ src_table_name }} {{'.'}} {{ ns.business_key }}  = E.LFT 
+          OR {{ src_table_name }} {{'.'}} {{ ns.business_key }}  = E.RGT
+
+     UNION
+
+    SELECT DISTINCT
+			{% for col in source.columns %}
+          {% if col.name != 'GROUP_ID' %}    
+             {{ get_source_transform(col) }} AS "{{ col.name }}"
+          {% else %}   
+              NVL(E.GROUP_NO, -{{ src_table_name }}.{{ ns.business_key }} )
+          {% endif %}  
+				  {%- if not loop.last -%}, {% endif %}
+			{% endfor %}
+  	{{ source.join }}	 
+    LEFT JOIN {{ ref_no_link(node.location.name, 'tblEdge') }}  "E"
+     ON {{ src_table_name }} {{'.'}} {{ ns.business_key }} = E.LFT 
+              OR {{ src_table_name }} {{'.'}} {{ ns.business_key }}= E.RGT 
+    WHERE E.LFT IS NULL OR E.RGT IS NULL
+                                                                      
+	{% endfor %}
+
+   
+ 
+{# SELECT * FROM tblEdges #}
+{# {% endif %}    #}  
+        

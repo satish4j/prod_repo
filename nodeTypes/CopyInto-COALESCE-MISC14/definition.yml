@@ -1,0 +1,126 @@
+fileVersion: 1
+id: COALESCE-MISC::14
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |+
+    capitalized: Copy Into
+    short: 'COPY'
+    tagColor: '#6ca37b'
+    isDisabled: false
+    plural: Copy Into
+    config:
+    - groupName: Source Data
+      items:
+      - displayName: Stage Name
+        attributeName: stageName
+        type: textBox
+        default: '@'
+        isRequired: true
+
+      - displayName: File Name(s) (Optional - Use single quotes and commas)
+        attributeName: fileNames
+        type: textBox
+        isRequired: false
+
+      - displayName: File Pattern (Optional - Use single quotes)
+        attributeName: filePattern
+        type: textBox
+        isRequired: false
+
+    - groupName: File Format
+      items:
+      - displayName: File Format Definition
+        attributeName: fileFormatType
+        type: dropdownSelector
+        default: "File Format Name"
+        options:
+        - File Format Name
+        - File Format Values
+      - displayName: File Format Name
+        attributeName: fileFormatName
+        type: textBox
+        default: ""
+        isRequired: false
+        enableIf: "{% if config.fileFormatType == 'File Format Name' %} true {% else %} false {% endif %}"
+      - displayName: File Type
+        attributeName: fileType
+        type: dropdownSelector
+        default: CSV
+        options:
+        - "CSV"
+        - "PARQUET"
+        - "JSON"
+        - "AVRO"
+        - "ORC"
+        - "XML"
+        isRequired: false
+        enableIf: "{% if config.fileFormatType != 'File Format Name' %} true {% else %} false {% endif %}"
+      - displayName: Compression
+        attributeName: compression
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV','JSON')) %} true {% else %} false {% endif %}"
+        type: dropdownSelector
+        default: "AUTO"
+        options:
+        - "AUTO"
+        - "GZIP"
+        - "BZ2"
+        - "BROTLI"
+        - "ZSTD"
+        - "DEFLATE"
+        - "RAW_DEFLATE"
+        - "NONE"
+        isRequired: false
+      - displayName: Record delimiter
+        attributeName: recDelim
+        type: textBox
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        default: "\n"
+        isRequired: false
+      - displayName: Field delimiter
+        attributeName: fieldDelim
+        type: textBox
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        default: ","
+        isRequired: false
+      - displayName: Field optionally enclosed by
+        attributeName: fieldEnclosed
+        type: textBox
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        default: "\\042"
+        isRequired: false
+      - displayName: Number of header lines to skip
+        attributeName: skipHeader
+        type: textBox
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        default: "1"
+        isRequired: false
+      - displayName: Skip blank lines
+        attributeName: skipBlankLines
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        type: toggleButton
+        default: true
+        isRequired: false
+      - displayName: Trim space
+        attributeName: trimSpace
+        enableIf: "{% if (config.fileFormatType != 'File Format Name' and config.fileType in ('CSV')) %} true {% else %} false {% endif %}"
+        type: toggleButton
+        default: true
+        isRequired: false
+
+    systemColumns:
+    - displayName: File Name
+      transform: metadata$filename
+      dataType: VARCHAR
+      placement: end
+      attributeName: copyFileName
+
+    - displayName: Copy Timestamp
+      transform: current_timestamp()
+      dataType: timestamp
+      placement: end
+      attributeName: copyTimestamp
+
+name: Copy Into
+type: NodeType

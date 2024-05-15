@@ -1,0 +1,12 @@
+{% set srcSchName = node.location.name %}
+{% set db = storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
+{% set sch = storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
+
+{{ stage('Create Table') }}
+CREATE OR REPLACE TABLE "{{ db }}"."{{ sch }}"."{{ node.name }}" (
+    {% for col in columns %}
+        "{{ col.name }}" {{ col.dataType }}
+    {%- if col.Description | length > 0 %} COMMENT '{{ col.Description }}'{% endif %}
+    {%- if not loop.last -%}, {% endif %}
+{% endfor %}
+)
