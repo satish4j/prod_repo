@@ -1,5 +1,5 @@
 fileVersion: 1
-id: 4cd90463-a929-412a-bab7-831f03582ae4
+id: bc42a7e3-b95c-4ec6-8182-95d4457d701e
 name: PARTSUPP
 operation:
   database: ""
@@ -14,8 +14,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: f2899b55-c5e7-4bab-b1de-013a28a5c0fe
-          stepCounter: 4cd90463-a929-412a-bab7-831f03582ae4
+          columnCounter: 1659e723-a93f-4e2c-b513-085a5f2b676d
+          stepCounter: bc42a7e3-b95c-4ec6-8182-95d4457d701e
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
@@ -23,14 +23,18 @@ operation:
         name: PS_PARTKEY
         nullable: false
         primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
         uniqueKey: false
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: c3fa6f3b-ef77-49ce-a331-83f9d83452b8
-          stepCounter: 4cd90463-a929-412a-bab7-831f03582ae4
+          columnCounter: 9463398d-b7f4-408d-87f3-9d79ca6f47af
+          stepCounter: bc42a7e3-b95c-4ec6-8182-95d4457d701e
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
@@ -38,14 +42,18 @@ operation:
         name: PS_SUPPKEY
         nullable: false
         primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
         uniqueKey: false
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 4e7fb12f-ea0f-46bf-95c5-ed7c1ce0a202
-          stepCounter: 4cd90463-a929-412a-bab7-831f03582ae4
+          columnCounter: 58b3cd13-38ae-4fe5-a2af-2f4b6142eec0
+          stepCounter: bc42a7e3-b95c-4ec6-8182-95d4457d701e
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
@@ -53,14 +61,18 @@ operation:
         name: PS_AVAILQTY
         nullable: false
         primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
         uniqueKey: false
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 4d2738a5-5564-43b4-8cb3-0613ba1a8d5c
-          stepCounter: 4cd90463-a929-412a-bab7-831f03582ae4
+          columnCounter: 16190d1f-8bc2-4b36-8f23-1211a553cc02
+          stepCounter: bc42a7e3-b95c-4ec6-8182-95d4457d701e
         config: {}
         dataType: NUMBER(12,2)
         defaultValue: ""
@@ -68,14 +80,18 @@ operation:
         name: PS_SUPPLYCOST
         nullable: false
         primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
         uniqueKey: false
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: cbb4b74c-0ff7-42d0-8e95-141705cedf23
-          stepCounter: 4cd90463-a929-412a-bab7-831f03582ae4
+          columnCounter: fbdcaf16-7c19-4205-a890-e62ce3da19ff
+          stepCounter: bc42a7e3-b95c-4ec6-8182-95d4457d701e
         config: {}
         dataType: VARCHAR(199)
         defaultValue: ""
@@ -83,6 +99,10 @@ operation:
         name: PS_COMMENT
         nullable: true
         primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
         uniqueKey: false
     join:
       joinCondition: FROM {{ ref('SRC', 'PARTSUPP') }}
