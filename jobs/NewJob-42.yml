@@ -1,6 +1,0 @@
-excludeSelector: ""
-fileVersion: 1
-id: "42"
-includeSelector: "+{ location: EDW name: FCT_LINEITEM_ORDERS_CUSTOMER_PART_REGION_SUPPLIER }"
-name: New Job
-type: Job
