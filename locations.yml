@@ -1,0 +1,11 @@
+defaultStorageMapping: EDW
+fileVersion: 1
+locations:
+  - ADW_PERSON
+  - ADW_PRODUCTION
+  - ADW_PURCHASING
+  - ADW_SALES
+  - DEMO
+  - EDW
+  - SJ_DEMO_DEV
+  - SRC
