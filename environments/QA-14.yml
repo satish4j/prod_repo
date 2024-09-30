@@ -14,7 +14,7 @@ mappingDefinitions:
     database: CLS_QA_DB
     schema: CLS_SALES
   DEMO:
-    database: CLS_QA_DB
+    database: CLS_PROD_DB
     schema: DEMO
   EDW:
     database: CLS_QA_DB
