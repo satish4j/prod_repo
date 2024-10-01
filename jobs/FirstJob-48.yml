@@ -1,0 +1,7 @@
+excludeSelector: ""
+fileVersion: 1
+id: "48"
+includeSelector: "+{ location: EDW name: FCT_LINEITEM_ORDERS }"
+name: First Job
+type: Job
+version: 2
