@@ -1,0 +1,233 @@
+fileVersion: 1
+id: 6b5230a2-289c-400a-ba28-a3f26099fe68
+name: WRK_JSON_DEMO
+operation:
+  config:
+    groupByAll: false
+    insertStrategy: INSERT
+    orderby: false
+    orderbycolumn:
+      items:
+        - {}
+    postSQL: ""
+    preSQL: ""
+    selectDistinct: false
+    testsEnabled: false
+    truncateBefore: true
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: EDW
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 236c2b9f-a97e-468c-8e92-18a630306713
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: VARIANT
+        description: ""
+        name: V
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: fec87d57-98bb-4e93-97a7-058faba27b07
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: DOUBLE
+        description: ""
+        name: AGE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"JSON_DEMO\".\"V\":\"age\"::DOUBLE"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7ffeaaf4-6062-4e3d-8b0e-059f713416fd
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: CHILDREN_AGE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"V_children\".value:\"age\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: fb5200a9-2be9-42a9-bc12-cf14a4bf3a91
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: CHILDREN_GENDER
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"V_children\".value:\"gender\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7b5dae3e-5794-4096-90e5-cba7005eb134
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: CHILDREN_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"V_children\".value:\"name\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 390c9ce0-b483-4b18-81d4-b09bcda5160f
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: CITIESLIVED_CITYNAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"V_citiesLived\".value:\"cityName\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a1bb030f-6def-453d-b74a-ea46bbea5db3
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: CITIESLIVED_YEARSLIVED
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"V_citiesLived_yearsLived\".value::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0429a15c-4429-4fd6-a223-9c71f632c36c
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: FULLNAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"JSON_DEMO\".\"V\":\"fullName\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 98905131-2b71-4b9d-8c5a-2761a0c5f1d3
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: GENDER
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"JSON_DEMO\".\"V\":\"gender\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: b4c237d5-d1ff-49ad-b357-1ad793bb1f3a
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: PHONENUMBER_AREACODE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"areaCode\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 619c7dba-da9b-47ee-8cfd-3828af61f2a9
+          stepCounter: 6b5230a2-289c-400a-ba28-a3f26099fe68
+        config: {}
+        dataType: STRING
+        description: ""
+        name: PHONENUMBER_SUBSCRIBERNUMBER
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eac434ca-e854-4b49-96a6-1d3a64c45caa
+                stepCounter: e9e3f1fd-c4f5-4bbe-8640-6358c6f48cef
+            transform: "\"JSON_DEMO\".\"V\":\"phoneNumber\".\"subscriberNumber\"::STRING"
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: DEMO
+            nodeName: JSON_DEMO
+        join:
+          joinCondition: |-
+            FROM {{ ref('DEMO', 'JSON_DEMO') }} "JSON_DEMO", 
+            lateral flatten(input => "V":"children", OUTER => TRUE) "V_children", 
+            lateral flatten(input => "V":"citiesLived", OUTER => TRUE) "V_citiesLived", 
+            lateral flatten(input => "V_citiesLived".value:"yearsLived", OUTER => TRUE) "V_citiesLived_yearsLived"
+        name: WRK_JSON_DEMO
+        noLinkRefs: []
+  name: WRK_JSON_DEMO
+  overrideSQL: false
+  schema: ""
+  sqlType: Base-Node-Types:::204
+  type: sql
+  version: 1
+type: Node
